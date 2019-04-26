@@ -9,6 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,14 +22,14 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String countries[] = {
-            "Nepal", "KTM",
-            "india", "Delhi",
-            "china", "beijing",
-            "UK", "london",
-            "Japan","Tokyo"
-
-    };
+//    public static final String countries[] = {
+//            "Nepal", "KTM",
+//            "india", "Delhi",
+//            "china", "beijing",
+//            "UK", "london",
+//            "Japan","Tokyo"
+//
+//    };
 
     private Map<String, String> dictionary;
 
@@ -35,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         ListView theCountries = findViewById(R.id.myList);
 
         dictionary = new HashMap<>();
+        readFromFile();
 
-        for (int i = 0; i < countries.length; i += 2) {
-            dictionary.put(countries[i], countries[i+1]);
-        }
+//        for (int i = 0; i < countries.length; i += 2) {
+//            dictionary.put(countries[i], countries[i+1]);
+//        }
 
         ArrayAdapter countryAdapter = new ArrayAdapter<>(
                 MainActivity.this,
@@ -64,4 +71,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    private void readFromFile(){
+        try{
+            FileInputStream fos=openFileInput("country.txt");
+            InputStreamReader isr=new InputStreamReader(fos);
+            BufferedReader br=new BufferedReader(isr);
+            String line="";
+            while((line=br.readLine())!=null){
+                String[] parts=line.split("->");
+                dictionary.put(parts[0],parts[1]);
+            }
+
+        }
+          catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

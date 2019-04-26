@@ -16,7 +16,7 @@ public class CapitalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capital);
-        TextView tvCapital= findViewById(R.id.tvCapital);
+        tvCapital= findViewById(R.id.tvCapital);
 
         Bundle bundle=getIntent().getExtras();
         if (bundle!=null){
